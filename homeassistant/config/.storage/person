@@ -1,0 +1,14 @@
+{
+    "data": {
+        "persons": [
+            {
+                "device_trackers": [],
+                "id": "d08ea7dd4fba4c72b220a79b4b1e139a",
+                "name": "Florian Kempenich",
+                "user_id": "ef3f21eeaa9f439eae256571533647b5"
+            }
+        ]
+    },
+    "key": "person",
+    "version": 1
+}

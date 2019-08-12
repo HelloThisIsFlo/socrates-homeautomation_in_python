@@ -1,0 +1,26 @@
+{
+    "data": {
+        "entities": [
+            {
+                "config_entry_id": null,
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "person.florian_kempenich",
+                "name": null,
+                "platform": "person",
+                "unique_id": "d08ea7dd4fba4c72b220a79b4b1e139a"
+            },
+            {
+                "config_entry_id": "6d40fd394dc24263a8c38bb7be9a5837",
+                "device_id": null,
+                "disabled_by": null,
+                "entity_id": "weather.home",
+                "name": null,
+                "platform": "met",
+                "unique_id": "home"
+            }
+        ]
+    },
+    "key": "core.entity_registry",
+    "version": 1
+}
