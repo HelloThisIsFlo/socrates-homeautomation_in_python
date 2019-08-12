@@ -1,0 +1,8 @@
+morse:
+  name: Morse Code
+  entities:
+    - input_text.morse
+    - input_number.morse_short
+    - input_number.morse_long
+    - input_number.morse_interval_symbols
+    - input_number.morse_interval_letters

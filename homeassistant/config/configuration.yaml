@@ -20,6 +20,40 @@ input_text:
     max: 100
     initial: ""
 
+  morse:
+    name: Morse
+    max: 10
+    initial: ""
+
+input_number:
+  morse_short:
+    name: Short (secs)
+    initial: 1
+    min: 1
+    max: 2
+    step: 1
+
+  morse_long:
+    name: Long (secs)
+    initial: 3
+    min: 2
+    max: 5
+    step: 1
+
+  morse_interval_symbols:
+    name: Symbols interval (secs)
+    initial: 1
+    min: 1
+    max: 2
+    step: 1
+
+  morse_interval_letters:
+    name: Letters interval (secs)
+    initial: 4
+    min: 3
+    max: 10
+    step: 1
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
