@@ -6,6 +6,25 @@ default_config:
 # http:
 #   base_url: example.duckdns.org:8123
 
+mqtt:
+  broker: mosquitto # Accessible thx to Docker networking
+  port: 1883
+  username: mqttuser
+  password: !secret mqtt_password
+
+switch:
+  - platform: mqtt
+    name: "DemoSwitch"
+    state_topic: "stat/demoswitch/RESULT"
+    value_template: "{{ value_json.POWER }}"
+    command_topic: "cmnd/demoswitch/POWER"
+    availability_topic: "tele/demoswitch/LWT"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    payload_available: "Online"
+    payload_not_available: "Offline"
+    retain: false
 
 group: !include groups.yaml
 automation: !include automations.yaml

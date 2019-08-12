@@ -12,6 +12,16 @@
                 "source": "onboarding",
                 "title": "Home",
                 "version": 1
+            },
+            {
+                "connection_class": "local_push",
+                "data": {},
+                "domain": "mqtt",
+                "entry_id": "be22f7537ecf4516806356ad4aa17815",
+                "options": {},
+                "source": "import",
+                "title": "configuration.yaml",
+                "version": 1
             }
         ]
     },
