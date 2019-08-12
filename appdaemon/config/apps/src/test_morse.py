@@ -9,5 +9,9 @@ def morse_code():
 
 
 class TestMorseCode:
-    def test_say_hi(self, morse_code: MorseCode):
-        assert morse_code.say_hi() == 'hi'
+    def test_listens_to_changes_in_morse_text(self, morse_code: MorseCode, assert_that):
+        assert_that(morse_code) \
+            .listens_to.state('input_text.morse') \
+            .with_callback(morse_code.on_new_text)
+
+
