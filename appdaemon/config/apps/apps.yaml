@@ -6,3 +6,7 @@ log_text:
   module: log_text
   class: LogText
 
+morse_code:
+  module: morse
+  class: MorseCode
+
