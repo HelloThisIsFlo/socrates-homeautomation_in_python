@@ -2,3 +2,7 @@ hello_world:
   module: hello
   class: HelloWorld
 
+log_text:
+  module: log_text
+  class: LogText
+
