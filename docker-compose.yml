@@ -21,5 +21,17 @@ services:
       - "TZ=Europe/Berlin"
     ports:
       - 8123:8123
+    depends_on:
+      - mosquitto
     command: [ "python", "-m", "homeassistant", "--config", "/config", "--log-file", "/generated/home-assistant.log" ]
+    restart: always
+
+  mosquitto:
+    image: toke/mosquitto
+    volumes:
+      - ./mosquitto/config/:/mqtt/config
+      - ./mosquitto/log/:/mqtt/log
+      - ./mosquitto/data/:/mqtt/data
+    ports:
+      - 1883:1883
     restart: always
