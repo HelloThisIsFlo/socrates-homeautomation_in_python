@@ -1,0 +1,5 @@
+**/.storage/auth
+**/.storage/core.restore_state
+
+**/home-assistant_v2.db*
+**/generated
