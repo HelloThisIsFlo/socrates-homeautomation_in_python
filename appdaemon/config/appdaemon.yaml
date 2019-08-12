@@ -6,7 +6,10 @@ appdaemon:
   plugins:
     HASS:
       type: hass
-      ha_url:
-      token:
-hadashboard:
-  dash_url:
+      ha_url: http://homeassistant:8123 # Accessible thx to Docker networking
+      token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhMWFkZDlkN2UwMTQ0Mzg5ODVmZTNmMmQwMWUyMTY3YSIsImlhdCI6MTU2NTYyMzI1NSwiZXhwIjoxODgwOTgzMjU1fQ.4Q-9zq3RT1QtXbf9kAqQ2AAnimVlR8poIn-TJEDK7ck"
+#
+# Not used
+#
+# hadashboard:
+#   dash_url:
