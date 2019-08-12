@@ -35,3 +35,13 @@ services:
     ports:
       - 1883:1883
     restart: always
+
+  appdaemon:
+    image: acockburn/appdaemon:latest
+    ports:
+      - 5050:5050
+    volumes:
+      - ./appdaemon/config:/conf
+    depends_on:
+      - homeassistant
+    restart: always
