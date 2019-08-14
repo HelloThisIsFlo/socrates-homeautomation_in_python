@@ -29,7 +29,7 @@ def mock_duration(given_that):
 
 
 @pytest.fixture
-def assert_flashed_for(given_that, assert_that, time_travel):
+def assert_flashed_for(assert_that, time_travel):
     def do_assert_flashed_for(duration):
         # T=t              - Light ON
         # T=t+(duration-1) - Light NOT OFF YET
@@ -114,3 +114,37 @@ class TestMorseCode:
 
         # Symbol 2: '-'
         assert_flashed_for(short)
+
+    def test_full_word(self, mock_duration, given_that, on_new_text, assert_flashed_for, time_travel):
+        # Sanity check
+        assert ' '.join([morse['T'], morse['E'], morse['A']]) == '- . .-'
+
+        # Given: Mock durations
+        short = 2
+        long = 4
+        symbol_interval = 10
+        letters_interval = 20
+        mock_duration(short=short, long=long, between_symbols=symbol_interval, between_letters=letters_interval)
+
+        # When: Receiving full word
+        on_new_text('Tea')
+
+        # Then: Light displays word
+        time_travel.fast_forward(1).seconds()  # First symbol starts after 1sec
+        # Letter 1: T
+        assert_flashed_for(long)
+        given_that.mock_functions_are_cleared()
+
+        # Letter 2: E
+        time_travel.fast_forward(letters_interval).seconds()
+        assert_flashed_for(short)
+        given_that.mock_functions_are_cleared()
+
+
+        # Letter 2: A
+        time_travel.fast_forward(letters_interval).seconds()
+        assert_flashed_for(short)
+        given_that.mock_functions_are_cleared()
+
+        time_travel.fast_forward(symbol_interval).seconds()
+        assert_flashed_for(long)
