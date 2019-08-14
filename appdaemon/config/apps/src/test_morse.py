@@ -63,3 +63,33 @@ class TestMorseCode:
         time_travel.fast_forward(1).seconds()
         time_travel.assert_current_time(3)
         assert_that('switch.demoswitch').was.turned_off()
+
+    def test_long_letter(self, mock_duration, on_new_text, assert_that, time_travel):
+        # Sanity check
+        assert morse['T'] == '-'
+
+        # Given: Duration for long letter == 4s
+        mock_duration(short=2, long=4, between_symbols=10, between_letters=20)
+
+        # When: Receiving long letter
+        on_new_text('T')
+
+        # Then: Light turned on for long duration
+        #
+        # T=0 Nothing happens
+        # T=1 Light should turn on
+        # T=5 Light should turn off (T=1 + long_duration=4)
+        time_travel.assert_current_time(0)
+        assert_that('switch.demoswitch').was_not.turned_on()
+
+        time_travel.fast_forward(1).seconds()
+        time_travel.assert_current_time(1)
+        assert_that('switch.demoswitch').was.turned_on()
+
+        time_travel.fast_forward(3).seconds()
+        time_travel.assert_current_time(4)
+        assert_that('switch.demoswitch').was_not.turned_off()
+
+        time_travel.fast_forward(1).seconds()
+        time_travel.assert_current_time(5)
+        assert_that('switch.demoswitch').was.turned_off()

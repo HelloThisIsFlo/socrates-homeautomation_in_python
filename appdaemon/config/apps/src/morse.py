@@ -46,11 +46,20 @@ class MorseCode(hass.Hass):
     def on_new_text(self, _entity, _attribute, _old, new_text, _kwargs):
         self._update_config()
         self.current = 1
-        self.short()
+        if new_text == 'E':
+            self.short()
+        else:
+            self.long()
 
     def short(self):
+        self._turn_on_then_off('short')
+
+    def long(self):
+        self._turn_on_then_off('long')
+
+    def _turn_on_then_off(self, duration_key):
         start = self.current
-        end = self.current + self.durations['short']
+        end = self.current + self.durations[duration_key]
         next = end + self.durations['interval_symbols']
 
         self.run_in(lambda _: self.turn_on('switch.demoswitch'), start)
