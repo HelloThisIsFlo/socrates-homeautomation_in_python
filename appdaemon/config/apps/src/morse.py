@@ -46,18 +46,22 @@ class MorseCode(hass.Hass):
     def on_new_text(self, _entity, _attribute, _old, new_text, _kwargs):
         self._update_config()
         self.current = 1
-        if new_text == 'E':
-            self.short()
+        if len(new_text) == 1:
+            self.flash_letter(new_text)
         else:
-            self.long()
+            raise NotImplementedError
 
-    def short(self):
-        self._turn_on_then_off('short')
+    def flash_letter(self, letter):
+        code = morse[letter]
+        for symbol in code:
+            if symbol == '.':
+                self.flash('short')
+            elif symbol == '-':
+                self.flash('long')
+            else:
+                raise ValueError(f"Unknown symbol: '{symbol}' in letter '{letter}")
 
-    def long(self):
-        self._turn_on_then_off('long')
-
-    def _turn_on_then_off(self, duration_key):
+    def flash(self, duration_key):
         start = self.current
         end = self.current + self.durations[duration_key]
         next = end + self.durations['interval_symbols']

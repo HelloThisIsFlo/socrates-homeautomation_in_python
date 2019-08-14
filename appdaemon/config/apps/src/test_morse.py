@@ -82,3 +82,35 @@ class TestMorseCode:
         # Then: Light turned on for long duration
         time_travel.fast_forward(1).seconds()  # First symbol starts after 1sec
         assert_flashed_for(4)
+
+    def test_composite_letter(self, mock_duration, given_that, on_new_text, assert_flashed_for, time_travel):
+        # Sanity check
+        assert morse['R'] == '.-.'
+
+        # Given: Mock durations
+        short = 2
+        long = 4
+        symbol_interval = 10
+        mock_duration(short=short, long=long, between_symbols=symbol_interval, between_letters=20)
+
+        # When: Receiving composite letter
+        on_new_text('R')
+
+        # Then: Light displays composite letter
+        # Symbol 1: '.'
+        time_travel.fast_forward(1).seconds()  # First symbol starts after 1sec
+        assert_flashed_for(short)
+
+        # Interval
+        given_that.mock_functions_are_cleared()
+        time_travel.fast_forward(symbol_interval).seconds()
+
+        # Symbol 2: '-'
+        assert_flashed_for(long)
+
+        # Interval
+        given_that.mock_functions_are_cleared()
+        time_travel.fast_forward(symbol_interval).seconds()
+
+        # Symbol 2: '-'
+        assert_flashed_for(short)
