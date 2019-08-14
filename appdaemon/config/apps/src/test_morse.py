@@ -28,13 +28,34 @@ def mock_duration(given_that):
     return do_mock_duration
 
 
+@pytest.fixture
+def assert_flashed_for(given_that, assert_that, time_travel):
+    def do_assert_flashed_for(duration):
+        # T=t              - Light ON
+        # T=t+(duration-1) - Light NOT OFF YET
+        # T=t+duration     - Light OFF
+
+        # T=t - Light ON
+        assert_that('switch.demoswitch').was.turned_on()
+
+        # T=t+(duration-1) - Light NOT OFF YET
+        time_travel.fast_forward(duration - 1).seconds()
+        assert_that('switch.demoswitch').was_not.turned_off()
+
+        # T=t+duration - Light OFF
+        time_travel.fast_forward(1).seconds()
+        assert_that('switch.demoswitch').was.turned_off()
+
+    return do_assert_flashed_for
+
+
 class TestMorseCode:
     def test_listens_to_changes_in_morse_text(self, morse_code: MorseCode, assert_that):
         assert_that(morse_code) \
             .listens_to.state('input_text.morse') \
             .with_callback(morse_code.on_new_text)
 
-    def test_short_letter(self, mock_duration, on_new_text, assert_that, time_travel):
+    def test_short_letter(self, mock_duration, on_new_text, assert_flashed_for, time_travel):
         # Sanity check
         assert morse['E'] == '.'
 
@@ -45,26 +66,10 @@ class TestMorseCode:
         on_new_text('E')
 
         # Then: Light turned on for short duration
-        #
-        # T=0 Nothing happens
-        # T=1 Light should turn on
-        # T=3 Light should turn off (T=1 + short_duration=2)
-        time_travel.assert_current_time(0)
-        assert_that('switch.demoswitch').was_not.turned_on()
+        time_travel.fast_forward(1).seconds()  # First symbol starts after 1sec
+        assert_flashed_for(2)
 
-        time_travel.fast_forward(1).seconds()
-        time_travel.assert_current_time(1)
-        assert_that('switch.demoswitch').was.turned_on()
-
-        time_travel.fast_forward(1).seconds()
-        time_travel.assert_current_time(2)
-        assert_that('switch.demoswitch').was_not.turned_off()
-
-        time_travel.fast_forward(1).seconds()
-        time_travel.assert_current_time(3)
-        assert_that('switch.demoswitch').was.turned_off()
-
-    def test_long_letter(self, mock_duration, on_new_text, assert_that, time_travel):
+    def test_long_letter(self, mock_duration, on_new_text, assert_flashed_for, time_travel):
         # Sanity check
         assert morse['T'] == '-'
 
@@ -75,21 +80,5 @@ class TestMorseCode:
         on_new_text('T')
 
         # Then: Light turned on for long duration
-        #
-        # T=0 Nothing happens
-        # T=1 Light should turn on
-        # T=5 Light should turn off (T=1 + long_duration=4)
-        time_travel.assert_current_time(0)
-        assert_that('switch.demoswitch').was_not.turned_on()
-
-        time_travel.fast_forward(1).seconds()
-        time_travel.assert_current_time(1)
-        assert_that('switch.demoswitch').was.turned_on()
-
-        time_travel.fast_forward(3).seconds()
-        time_travel.assert_current_time(4)
-        assert_that('switch.demoswitch').was_not.turned_off()
-
-        time_travel.fast_forward(1).seconds()
-        time_travel.assert_current_time(5)
-        assert_that('switch.demoswitch').was.turned_off()
+        time_travel.fast_forward(1).seconds()  # First symbol starts after 1sec
+        assert_flashed_for(4)
