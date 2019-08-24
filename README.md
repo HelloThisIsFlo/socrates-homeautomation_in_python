@@ -14,7 +14,8 @@ The final commit contains multiple services running in Docker:
 
 ## Support Material
 - **Presentation**
-  - [MindMap & Presentation - iThoughtsX](/support/presentation/HomeAutomationSocrates.itmz)
+  - [MindMap & Presentation - iThoughtsX](/support/presentation/HomeAutomationSocrates.itmz)  
+    => [Flipcharts](/support/presentation/HomeAutomation_in_Python.pdf)
   - [MindMap only - PNG](/support/presentation/MindmapAsPNG.png)
   - [Presentation only - PDF](/support/presentation/PresentationAsPDF.pdf)
 - **Blog Post:** _SOON @ https://professionalbeginner.com_
