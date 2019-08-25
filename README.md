@@ -32,3 +32,4 @@ That being said, the repo itself is conceived in a way to make it somewhat easil
   - **See the diff to understand how that particular step was implemented**  
     _ex: `git show step-1a`_
 
+![Steps of the tutorial](/support/presentation/hero.png)
